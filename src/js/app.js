@@ -11,8 +11,10 @@ class App {
         // 레티나 디스플레이에서도 제대로 보이기 위해
         this.pixelRatio = window.devicePixelRatio > 1 ? 2 : 1;
 
-        
+        // Click Event
         window.addEventListener('resize', this.resize.bind(this), false);
+        window.addEventListener('click', this.click.bind(this), false);
+
         this.resize();
 
         // 화면 가운데에 나무 생성하기 
@@ -34,6 +36,12 @@ class App {
         // 리사이즈시 캔버스를 비워줌
         this.ctx.clearRect(0, 0, this.width, this.height);
     };
+
+    // click 함수 추가
+    click(event) {
+        const { clientX } = event;
+        new Tree(this.ctx, clientX, this.height);
+    }
 
 }   // end - class
 

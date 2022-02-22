@@ -6,7 +6,7 @@ export class Tree {
         this.posX = posX;
         this.posY = posY;
         this.branches = []; 
-        this.depth = 5; // depth 추가
+        this.depth = 11; // depth 추가
 
         this.init();
     }
@@ -20,15 +20,22 @@ export class Tree {
     // 나무 생성하기
     createBranch(startX, startY, angle, depth) {
         if (depth === this.depth) return;
-    
-        const len = 100; // 나무의 길이 100으로 변경
-        const endX = startX + this.cos(angle) * len;
-        const endY = startY + this.sin(angle) * len;
-    
-        this.branches.push(new Branch(startX, startY, endX, endY));
-    
-        this.createBranch(endX, endY, angle - 30, depth + 1);
-        this.createBranch(endX, endY, angle + 30, depth + 1);
+
+        // random 함수를 만들어 가지들의 길이를 랜덤으로 준다.
+        // depth가 0 -> 나무 기둥을 그릴 때 최소 길이, 최대 길이를 다르게 한다.
+        const len = depth === 0 ? this.random(10, 13) : this.random(0, 11);
+
+        // 현재 depth의 역을 곱하여 depth가 점점 늘어날 수록 길이가 가늘게 함
+        const endX = startX + this.cos(angle) * len * (this.depth - depth);
+        const endY = startY + this.sin(angle) * len * (this.depth - depth);
+
+        this.branches.push(
+            new Branch(startX, startY, endX, endY, this.depth - depth)
+        );
+
+        // 각도도 랜덤하게 부여
+        this.createBranch(endX, endY, angle - this.random(15, 23), depth + 1);
+        this.createBranch(endX, endY, angle + this.random(15, 23), depth + 1);
       }
 
     // 나무를 canvas 에 그리기 
@@ -38,7 +45,7 @@ export class Tree {
           }
     }
 
-    // 각도 관련 함수 추가
+    // 각도 관련 함수
     cos(angle) {
         return Math.cos(this.degToRad(angle));
     }
@@ -47,5 +54,10 @@ export class Tree {
     }
     degToRad(angle) {
         return (angle / 180.0) * Math.PI;
+    }
+
+    // random 함수
+    random(min, max) {
+        return min + Math.floor(Math.random() * (max - min + 1));
     }
 }

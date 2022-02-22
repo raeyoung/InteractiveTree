@@ -1,3 +1,5 @@
+import { Tree } from './tree.js';
+
 class App {
     constructor() {
         // 캔버스 생성 및 랜더링
@@ -9,6 +11,9 @@ class App {
         
         window.addEventListener('resize', this.resize.bind(this), false);
         this.resize();
+
+        // 화면 가운데에 나무 생성하기 
+        new Tree(this.ctx, this.width / 2, this.height);
 
     }   // end - constructor
 

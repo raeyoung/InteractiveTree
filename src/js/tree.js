@@ -25,7 +25,7 @@ export class Tree {
         // depth가 0 -> 나무 기둥을 그릴 때 최소 길이, 최대 길이를 다르게 한다.
         const len = depth === 0 ? this.random(10, 13) : this.random(0, 11);
 
-        // 현재 depth의 역을 곱하여 depth가 점점 늘어날 수록 길이가 가늘게 함
+        // 현재 depth의 역을 곱 depth가 점점 늘어날 수록 길이가 가늘게 함
         const endX = startX + this.cos(angle) * len * (this.depth - depth);
         const endY = startY + this.sin(angle) * len * (this.depth - depth);
 
